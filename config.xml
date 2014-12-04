@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.supernest.hereigo"  version = "1.0.0" versionCode = "1" >
 
-	<name>How Safe is My House?</name>
-	<description>A cross platform mobile application for self check oh house safety.</description>
+	<name>Here I Go!</name>
+	<description>A cross platform mobile application for HereMaps</description>
 	<author>404 Developers Guild</author>
 	<gap:platforms>
 		<gap:platform name="ios" />
