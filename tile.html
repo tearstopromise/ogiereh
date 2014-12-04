@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>REDAS E.D.M Mobile</title>
+  <meta charset="utf-8" />
+ <meta name="viewport" content="width=device-width, user-scalable=no" />
+  <link rel="stylesheet" type="text/css" href="css/jquery.mobile.flatui.css" />
+	<style>
+	.ui-grid-b{	
+		margin-top:-16px;
+		
+		}
+		
+	.ui-content {
+			padding:0em;
+		}
+
+
+
+	</style>
+</head>
+<body>
+  
+    <div data-role="page" id="mainpage">
+        <div data-role="header" data-position="relative">
+  
+        
+					<img src = "images/logoheader.png" style="width:100%;margin-left:auto;margin-right:auto;display:block;margin-bottom:-10px;"/>
+			
+        </div>
+        <div data-role="content">
+	   
+	
+	  
+	   
+	   
+	   <div class="ui-grid-b">
+	   <div class="ui-block-a"><button data-theme="e" id="btn-addbuildingdata"><img src="images/newbuildingdata.png" width="100%"></button></div>
+	   	<div class="ui-block-b"><button data-theme="b" id="btn-buildingdata"><img src="images/viewbuilding.png" width="100%"></button></div>
+		<div class="ui-block-c"><button data-theme="d" id="btn-surveyed"><img src="images/surveyed.png" width="100%"></button></div>
+		</div>
+		<div id="verifyadmin" class="admindiv">
+		</div>
+	
+	
+	<div class="ui-grid-b">
+	<div class='ui-block-a'><button data-theme='b' id='btn-employee'><img src='images/viewemployees.png' width='100%'></button></div>
+	<div class="ui-block-b"><button data-theme="d" id="btn-changepass"><img src="images/changepass.png" width="100%"></button></div>
+	<div class="ui-block-c"><button data-theme="f" id="btn-help"><img src="images/helpandinfo.png" width="100%"></button></div>
+	
+	
+	
+	
+	
+	</div>
+	
+	
+	<div class="ui-grid-b">
+	   <div class="ui-block-a"><button data-theme="g" id="btn-reportbugs"><img src="images/reportbugs.png" width="100%"></button></div>
+	   	<div class="ui-block-b"><button data-theme="e" id="btn-about"><img src="images/aboutt.png" width="100%"></button></div>
+		<div class="ui-block-c"><button data-theme="c" id="btn-logout"><img src="images/logout.png" width="100%"></button></div>
+		</div>
+		
+		
+		
+ </div>
+ </div> <!--End of Main Page-->
+
+	</body>	
+		  <script src="js/jquery.js"></script>
+  <script src="js/jquery.mobile-1.4.0.min.js"></script>
+  
+  <script>
+ 
+  $("#mainpage").fadeToggle("slow");	
+		$("#paneluserinfo").html(localStorage.getItem("username") + "<br />" +localStorage.getItem("unit_id") + "<br />" + localStorage.getItem("designationOffice"));
+		var a = localStorage.getItem("usertype");
+	
+	
+	
+		if( a == 1 ){
+			$("#verifyadmin").html("<div class='ui-grid-b'><div class='ui-block-a'><button data-theme='c' id='btn-approve'><img src='images/approve.png' width='100%'></button></div> <div class='ui-block-b'><button data-theme='g' id='btn-feed'><img src='images/employeefeed.png'width='100%'></button></div> <div class='ui-block-c'><button data-theme='a' id='btn-approveemployees'><img src='images/approveemployees.png' width='100%'></button></div></div>");
+
+		}
+	
+	
+	$("#btn-about").click(function(){
+		location.href = "help.html#About";
+	
+	
+	
+	});
+ $('button').buttonMarkup({ corners: false });
+  </script>
+  <script src="js/otherfunctions.js"></script>
+
+</html>
