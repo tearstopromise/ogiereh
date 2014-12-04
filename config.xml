@@ -21,6 +21,7 @@
 	<access uri="*" subdomains="true" />
 	<access uri="http://hereigo.zz.mu/" subdomains="true" />
 	<feature name="http://api.phonegap.com/1.0/network"/>
+		<feature name="http://api.phonegap.com/1.0/geolocation"/>
 	<feature name="InAppBrowser">
 		<param name="android-package" value="org.apache.cordova.InAppBrowser" />
 
