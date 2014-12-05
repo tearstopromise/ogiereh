@@ -112,7 +112,7 @@ function loadCrossDomainKMLFile() {
   jQuery.support.cors = true;
   $.ajax({
     type: 'GET',
-    url: './kml/phpsql_genkml3.php',
+    url: 'http://hereigo.zz.mu/kml/phpsql_genkml3.php',
     dataType: 'xml',
     success: onKMLFileLoaded,
     error : onKMLFileLoadError
