@@ -31,7 +31,7 @@
 	.modal{
 
   width: 80%;
-  height:60%;
+  height:70%;
  
 }
   </style>
@@ -40,8 +40,8 @@
 
 <div data-role="page" style="">
 
-	<div data-role="header" data-position="fixed">
-		<center><img src="images/banner.png" width="60%"/></center>
+	<div data-role="header" >
+		<center><img src="images/banner.png" width="50%"/></center>
 	</div>
 	<div data-role="content" id="mapContainer" style="width:100%; height:100%;margin:0;position:fixed;padding:0">
 
@@ -52,7 +52,7 @@
 
 
 <form id="login-form" class="modal">
- <iframe id="myframe" frameborder="0" src="routing-from-a-to-b.html" style="width:100%; height:100%; position:relative;"></iframe>
+ <iframe id="myframe" frameborder="0" src="a-to-b-with-directions.html" style="width:100%; height:100%; position:relative;"></iframe>
 </form>
 
 
@@ -112,7 +112,7 @@ function loadCrossDomainKMLFile() {
   jQuery.support.cors = true;
   $.ajax({
     type: 'GET',
-    url: 'http://hereigo.zz.mu/kml/phpsql_genkml3.php',
+    url: './kml/phpsql_genkml3.php',
     dataType: 'xml',
     success: onKMLFileLoaded,
     error : onKMLFileLoadError
@@ -130,6 +130,12 @@ var lat=parseFloat(window.localStorage.getItem("b"));
   var coord = new nokia.maps.geo.Coordinate(lat, lng),
     standardMarker = new nokia.maps.map.StandardMarker(coord);
 	
+	
+
+  map.components.add(new nokia.maps.map.component.Overview());
+  map.components.add(new nokia.maps.map.component.TypeSelector());
+  map.components.add(new nokia.maps.map.component.ScaleBar());
+
   map.objects.add(standardMarker);
   loadCrossDomainKMLFile();
 }

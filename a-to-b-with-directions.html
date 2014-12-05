@@ -1,29 +1,27 @@
-
 <!doctype html>
 <html>
 <head>
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=7; IE=EmulateIE9; IE=10" />
-  <meta name="keywords" content="makeRouteRequest,onRouteCalculated" />
-  <title>HERE Maps API Example: Calculating a route between two points</title>
-  <!-- Set up constants such as APP ID and token -->
+  <meta name="keywords" content="addDirectionsRenderer,makeRouteRequest,onRouteCalculated"/>
+  <title>HERE Maps API Example: A to B routing with Directions</title>
+
   <script type="text/javascript" src="libs/hereAppIdAndToken.js"></script>
-  <!-- Bootstrap jQuery Library -->
+
   <script type="text/javascript" src="libs/jQl.min.js"></script>
 
-  <!-- Asynchronously the HERE Maps API for JavaScript -->
   <script type="text/javascript" src="libs/hereAsyncLoader.js"
     id="HereMapsLoaderScript"
     data-map-container="mapContainer"
     data-params="maps,directions"
-    data-callback="afterHereMapLoad" >
+    data-callback="afterHereMapLoad"
+    data-libs="directions-renderer"
+    data-parent="demos/directions-rendering-component/">
   </script>
   <link rel="icon" href="http://here.com/favicon.ico"/>
+  <link href="css/routing.css" rel="stylesheet"/>
   
-
-  <!--<link href="http://developer.here.com/html/css/main.css" rel="stylesheet" />-->
-  
-  <style>
+    <style>
     html,body{
   position:relative;
   width:100%;
@@ -34,75 +32,25 @@
 </head>
 <body>
 
-  <div id="mapContainer" style="width:100%; height:70%;position:absolute;"></div>
-  <div id="directions" style="width:100%; height:30%;position:absolute;"></div>
+  <div id="mapContainer" style="width:100%; height:70%;position:fixed;top:0;"></div>
+  
+  
 
-<script id="example-code" data-categories="routing" type="text/javascript" >
+  <div id="directions" style="position:fixed;width:100%;overflow-y:scroll; height:30%;bottom:0;"></div>
+
+<script type="text/javascript" >
 
 var map,
+  infoBubbles, 
+  directionsRenderer,
   router;
-	var a=parseFloat(window.localStorage.getItem("lat"));
+
+  	var a=parseFloat(window.localStorage.getItem("lat"));
 	var b=parseFloat(window.localStorage.getItem("lng"));
 	var c=parseFloat(window.localStorage.getItem("a"));
 	var d=parseFloat(window.localStorage.getItem("b"));
-function onRouteCalculated(observedRouter, key, value) {
-  if (value === 'finished') {
-    var routes = observedRouter.getRoutes(),
-      mapRoute =
-        new nokia.maps.routing.component.RouteResultSet(
-          routes[0]
-        ).container; //first option found
-    map.objects.add(mapRoute);
-
-    //Zoom to the bounding box of the route
-    map.zoomTo(mapRoute.getBoundingBox(), false, 'default');
-  } else if (value === 'failed') {
-    alert('The routing request failed.');
-  }
-}
-
-function makeRouteRequest() {
-  var waypoints = new nokia.maps.routing.WaypointParameterList(),
-    modes = [{
-      type: 'shortest',
-      transportModes: ['car'],
-      options: 'avoidTollroad',
-      trafficMode: 'default'
-    }];
-
-			
-  waypoints.addCoordinate(
-    new nokia.maps.geo.Coordinate(d,c)
-  ); // Berlin, Germany
-  waypoints.addCoordinate(
-    new nokia.maps.geo.Coordinate(b , a)
-  );  // Paris, France
-
-
-  router = new nokia.maps.routing.Manager();
-  router.addObserver('state', onRouteCalculated);
-  router.calculateRoute(waypoints, modes);
 	
-}
-
-function displayAddress(data) {
-  
-}
-
-
-function afterHereMapLoad(theMap) {
-  map = theMap;
-  makeRouteRequest();
-}
-
-
-function addDirectionsRenderer(map) {
-  directionsRenderer = new DirectionsRenderer(document.getElementById('directions'));
-  map.addComponent(directionsRenderer);
-}
-
-function onRouteCalculated(observedRouter, key, value) {
-  directionsRenderer = new DirectionsRenderer(document.getElementById('directions'));
+function onRouteCalculated (observedRouter, key, value) {
   if (value === 'finished') {
     var routes = observedRouter.getRoutes(),
 
@@ -121,7 +69,47 @@ function onRouteCalculated(observedRouter, key, value) {
   }
 }
 
+function makeRouteRequest() {
+  var waypoints = new nokia.maps.routing.WaypointParameterList(),
+    modes = [{
+      type: 'fastest',
+      transportModes: ['car'],
+      options: 'avoidTollroad',
+      trafficMode: 'default'
+    }];
+
+ waypoints.addCoordinate(
+    new nokia.maps.geo.Coordinate(d,c)
+  ); // Berlin, Germany
+  waypoints.addCoordinate(
+    new nokia.maps.geo.Coordinate(b , a)
+  );  // Paris, France
+
+
+  router = new nokia.maps.routing.Manager();
+  router.addObserver('state', onRouteCalculated);
+  router.calculateRoute(waypoints, modes);
+
+}
+
+function addDirectionsRenderer(map) {
+  directionsRenderer = new DirectionsRenderer(document.getElementById('directions'));
+  map.addComponent(directionsRenderer);
+
+}
+
+function afterHereMapLoad(theMap) {
+  map = theMap;
+  infoBubbles = new nokia.maps.map.component.InfoBubbles();
+  infoBubbles.options.defaultWidth = 200;
+  infoBubbles.options.width = 200;
+  map.addComponent(infoBubbles);
+  addDirectionsRenderer(map);
+  makeRouteRequest();
+
+}
+
 </script>
-  <script type="text/javascript" charset="UTF-8" src="libs/directions-renderer.js"></script>
+
 </body>
 </html>
